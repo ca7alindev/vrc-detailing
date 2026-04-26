@@ -1,9 +1,9 @@
-# Ignoră datele brute (binarele)
-data/
+# Ignoră datele binare ale bazei de date (Asta dădea eroare)
+data/db/
+data/nginx-proxy/
 
-# Dar păstrează fișierul de configurare Docker
-!docker-compose.yaml
+# NU ignora fișierele WordPress (le vrem pe server!)
+!data/wordpress/
 
-# Fișiere de log sau cache
-*.log
-.DS_Store
+# Ignoră fișierele de sistem WordPress care nu trebuie verziunate
+data/wordpress/wp-config.php
