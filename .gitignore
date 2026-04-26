@@ -1,0 +1,9 @@
+wp-config.php
+node_modules/
+.htaccess
+wp-content/uploads/
+wp-content/upgrade/
+*.log
+docker-compose.yml
+data/db/
+data/
