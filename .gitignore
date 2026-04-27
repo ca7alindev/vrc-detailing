@@ -1,9 +1,28 @@
-# Ignoră datele binare ale bazei de date (Asta dădea eroare)
+# --- IGNORĂ DATELE BINARE ȘI CONFIGURĂRILE LOCALE ---
 data/db/
 data/nginx-proxy/
+.env
 
-# NU ignora fișierele WordPress (le vrem pe server!)
-!data/wordpress/
+# --- GESTIONARE WORDPRESS ---
 
-# Ignoră fișierele de sistem WordPress care nu trebuie verziunate
+# Mai întâi ignorăm tot folderul data/wordpress ca să fim siguri
+data/wordpress/*
+
+# Apoi permitem (UNIGNORE) doar folderele care conțin munca ta (Teme și Plugin-uri)
+!data/wordpress/wp-content/
+data/wordpress/wp-content/*
+
+# Specificăm exact ce vrem să păstrăm în wp-content
+!data/wordpress/wp-content/themes/
+!data/wordpress/wp-content/plugins/
+!data/wordpress/wp-content/languages/
+
+# Ignorăm upload-urile (pozele cu mașini ocupă mult spațiu, le urci separat sau prin backup)
+data/wordpress/wp-content/uploads/
+
+# Ignorăm fișierul de configurare (pe server va fi generat de Docker cu datele din .env)
 data/wordpress/wp-config.php
+
+# --- CURĂȚENIE SISTEM ---
+.DS_Store
+*.log

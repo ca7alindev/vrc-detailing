@@ -4,10 +4,10 @@ services:
     container_name: detailing-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_password_aici
-      MYSQL_DATABASE: wordpress_db
-      MYSQL_USER: wp_user
-      MYSQL_PASSWORD: wp_password_aici
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./data/db:/var/lib/mysql
       - ./init-db:/docker-entrypoint-initdb.d      
@@ -19,10 +19,10 @@ services:
     container_name: detailing-wp
     restart: always
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_password_aici
-      WORDPRESS_DB_NAME: wordpress_db
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
     volumes:
       - ./data/wordpress:/var/www/html
 
