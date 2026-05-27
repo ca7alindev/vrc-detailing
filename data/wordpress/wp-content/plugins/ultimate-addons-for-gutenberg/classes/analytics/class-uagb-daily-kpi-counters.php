@@ -128,10 +128,6 @@ if ( ! class_exists( 'UAGB_Daily_KPI_Counters' ) ) {
 		 * @return void
 		 */
 		public function on_transition_post_status( $new_status, $old_status, $post ) {
-			if ( ! self::is_tracking_enabled() ) {
-				return;
-			}
-
 			if ( 'publish' !== $new_status || 'publish' === $old_status ) {
 				return;
 			}
@@ -193,10 +189,6 @@ if ( ! class_exists( 'UAGB_Daily_KPI_Counters' ) ) {
 		 * @return void
 		 */
 		public function on_save_post_record_block_types( $post_id, $post ) {
-			if ( ! self::is_tracking_enabled() ) {
-				return;
-			}
-
 			if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
 				return;
 			}
@@ -242,10 +234,6 @@ if ( ! class_exists( 'UAGB_Daily_KPI_Counters' ) ) {
 		 * @return void
 		 */
 		public function on_gbs_changed( $old_value, $new_value ) {
-			if ( ! self::is_tracking_enabled() ) {
-				return;
-			}
-
 			if ( $old_value === $new_value ) {
 				return;
 			}
@@ -262,10 +250,6 @@ if ( ! class_exists( 'UAGB_Daily_KPI_Counters' ) ) {
 		 * @return void
 		 */
 		public function on_gbs_added( $option, $value ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-			if ( ! self::is_tracking_enabled() ) {
-				return;
-			}
-
 			if ( empty( $value ) ) {
 				return;
 			}
@@ -331,10 +315,6 @@ if ( ! class_exists( 'UAGB_Daily_KPI_Counters' ) ) {
 		 */
 		public static function record_advanced_feature( $feature ) {
 			if ( ! is_string( $feature ) || '' === trim( $feature ) ) {
-				return;
-			}
-
-			if ( ! self::is_tracking_enabled() ) {
 				return;
 			}
 
@@ -419,16 +399,6 @@ if ( ! class_exists( 'UAGB_Daily_KPI_Counters' ) ) {
 			delete_option( self::OPT_BLOCK_TYPES );
 			delete_option( self::OPT_ADVANCED );
 			delete_option( self::OPT_PAGES_WITH_SPECTRA );
-		}
-
-		/**
-		 * Whether analytics tracking is active for Spectra.
-		 *
-		 * @since 2.19.25
-		 * @return bool
-		 */
-		private static function is_tracking_enabled() {
-			return 'yes' === get_option( 'spectra_usage_optin', 'no' );
 		}
 
 		/**

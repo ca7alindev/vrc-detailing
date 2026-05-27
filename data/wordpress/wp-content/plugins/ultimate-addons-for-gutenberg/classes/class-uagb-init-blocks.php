@@ -332,7 +332,7 @@ class UAGB_Init_Blocks {
 			$registry = WP_Block_Type_Registry::get_instance();
 			// Only register if the block is NOT already registered.
 			if ( ! $registry->is_registered( $block['blockName'] ) ) {
-				$registry->register( $block['blockName'], $block['attrs'] );
+				$registry->register( $block['blockName'], array() );
 			}
 		}
 

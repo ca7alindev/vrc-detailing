@@ -170,11 +170,6 @@ if ( ! class_exists( 'UAGB_Incremental_Block_Tracker' ) ) {
 		 * @return void
 		 */
 		public function track_block_changes_on_save( $post_id, $post ) {
-			// Skip if analytics is not enabled.
-			if ( get_option( 'spectra_usage_optin', 'no' ) !== 'yes' ) {
-				return;
-			}
-
 			// Skip autosaves and revisions.
 			if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
 				return;
@@ -229,11 +224,6 @@ if ( ! class_exists( 'UAGB_Incremental_Block_Tracker' ) ) {
 		 * @return void
 		 */
 		public function track_block_removal_on_delete( $post_id ) {
-			// Skip if analytics is not enabled.
-			if ( get_option( 'spectra_usage_optin', 'no' ) !== 'yes' ) {
-				return;
-			}
-
 			$post = get_post( $post_id );
 			if ( ! $post ) {
 				return;
@@ -289,11 +279,6 @@ if ( ! class_exists( 'UAGB_Incremental_Block_Tracker' ) ) {
 		 * @return void
 		 */
 		public function track_block_addition_on_untrash( $post_id ) {
-			// Skip if analytics is not enabled.
-			if ( get_option( 'spectra_usage_optin', 'no' ) !== 'yes' ) {
-				return;
-			}
-
 			$post = get_post( $post_id );
 			if ( ! $post ) {
 				return;

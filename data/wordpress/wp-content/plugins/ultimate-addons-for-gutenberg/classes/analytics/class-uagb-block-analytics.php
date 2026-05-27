@@ -218,11 +218,8 @@ if ( ! class_exists( 'UAGB_Block_Analytics' ) ) {
 		 * @return array Merged stats with block usage data.
 		 */
 		public function get_block_stats_for_analytics( $existing_stats = array() ) {
-			// Only return stats if analytics is enabled.
-			if ( get_option( 'spectra_usage_optin', 'no' ) !== 'yes' ) {
-				return $existing_stats;
-			}
-
+			// Consent is enforced by BSF_Analytics::is_tracking_enabled() before
+			// `bsf_core_stats` is invoked — no per-emit gate needed here.
 			$stats               = UAGB_Block_Stats_Processor::get_block_stats();
 			$collection_complete = UAGB_Block_Stats_Processor::is_collection_complete();
 			$last_collection     = UAGB_Block_Stats_Processor::get_last_collection_time();
