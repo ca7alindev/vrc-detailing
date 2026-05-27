@@ -16,7 +16,7 @@
 }
 /* Collapse & expand elements in settings meta boxes */
 .wpbc_page .meta-box .postbox .handlediv {
-    background: url("https://ca7alindev.github.io/vrc-detailing/wp-admin/images/arrows.png") no-repeat scroll 5px -30px transparent;
+    background: url("https://vrcserviziauto.eu/wp-admin/images/arrows.png") no-repeat scroll 5px -30px transparent;
 }
 .wpbc_page .meta-box .postbox.closed .handlediv {
     background-position:5px 5px;

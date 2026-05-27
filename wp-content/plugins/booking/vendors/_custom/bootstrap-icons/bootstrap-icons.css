@@ -7,8 +7,8 @@
 @font-face {
   font-display: block;
   font-family: "wpbc-bootstrap-icons";
-  src: url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/vendors/_custom/bootstrap-icons/fonts/bootstrap-icons.woff2?dd67030699838ea613ee6dbda90effa6") format("woff2"),
-url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/vendors/_custom/bootstrap-icons/fonts/bootstrap-icons.woff?dd67030699838ea613ee6dbda90effa6") format("woff");
+  src: url("https://vrcserviziauto.eu/wp-content/plugins/booking/vendors/_custom/bootstrap-icons/fonts/bootstrap-icons.woff2?dd67030699838ea613ee6dbda90effa6") format("woff2"),
+url("https://vrcserviziauto.eu/wp-content/plugins/booking/vendors/_custom/bootstrap-icons/fonts/bootstrap-icons.woff?dd67030699838ea613ee6dbda90effa6") format("woff");
 }
 
 .bi::before,
