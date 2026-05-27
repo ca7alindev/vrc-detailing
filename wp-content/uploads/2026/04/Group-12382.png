@@ -271,7 +271,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 											<div class="site-footer-primary-section-2 site-footer-section site-footer-section-2">
 							<aside class="footer-widget-area widget-area site-footer-focus-item footer-widget-area-inner" data-section="sidebar-widgets-footer-widget-2" aria-label="Footer Widget 2" role="region">
 			<section id="block-21" class="widget widget_block">
-<div class="wp-block-uagb-advanced-heading uagb-block-97eb29cd"><h2 class="uagb-heading-text">Contact Info</h2><p class="uagb-desc-text">Address: 123 Fifth Avenue,<br>New York – 10160, USA.<br>Call Us: 91-123-456-7890<br>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cdb4a2b8bfa4a98da8b5aca0bda1a8e3aea2a0">[email protected]</a><br>Mon – Fri: 9:00 AM – 5:00 PM</p></div>
+<div class="wp-block-uagb-advanced-heading uagb-block-97eb29cd"><h2 class="uagb-heading-text">Contact Info</h2><p class="uagb-desc-text">Address: 123 Fifth Avenue,<br>New York – 10160, USA.<br>Call Us: 91-123-456-7890<br>Email: <a href="https://ca7alindev.github.io/vrc-detailing/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cdb4a2b8bfa4a98da8b5aca0bda1a8e3aea2a0">[email protected]</a><br>Mon – Fri: 9:00 AM – 5:00 PM</p></div>
 </section>		</aside>
 						</div>
 											<div class="site-footer-primary-section-3 site-footer-section site-footer-section-3">
@@ -314,7 +314,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 	</footer><!-- #colophon -->
 	</div><!-- #page -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="speculationrules">
+<script data-cfasync="false" src="https://ca7alindev.github.io/vrc-detailing/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/car-repair-08/*"},{"not":{"href_matches":["/car-repair-08/wp-*.php","/car-repair-08/wp-admin/*","/car-repair-08/wp-content/uploads/sites/1148/*","/car-repair-08/wp-content/*","/car-repair-08/wp-content/plugins/*","/car-repair-08/wp-content/themes/astra/*","/car-repair-08/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
 <div id="showcase-cta-entry-root" class="st-customizer-cta st-section-root"></div>			<script>

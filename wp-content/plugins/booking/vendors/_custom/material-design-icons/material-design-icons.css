@@ -7,7 +7,7 @@
   font-family: 'wpbc-material-icons';
   font-style: normal;
   font-weight: 400;
-  src: url("/wp-content/plugins/booking/vendors/_custom/material-design-icons/fonts/google-material-design-icons.woff2") format('woff2');
+  src: url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/vendors/_custom/material-design-icons/fonts/google-material-design-icons.woff2") format('woff2');
 }
 .wpbc_icn::before,
 [class^="wpbc_icn_"]::before,

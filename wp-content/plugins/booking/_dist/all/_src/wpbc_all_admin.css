@@ -1248,7 +1248,7 @@ a.wpbc_ui_settings__text_pro:hover {
   display: block;
   width: 12px;
   height: 12px;
-  /*background: url("/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") -42px 1px no-repeat;*/
+  /*background: url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") -42px 1px no-repeat;*/
   font-size: 1px;
 }
 .chzn-container-single .chzn-single abbr:hover {
@@ -1269,7 +1269,7 @@ a.wpbc_ui_settings__text_pro:hover {
   display: block;
   width: 100%;
   height: 100%;
-  /*background: url("/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") no-repeat 0px 2px;*/
+  /*background: url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") no-repeat 0px 2px;*/
 }
 .chzn-container-single .chzn-search {
   position: relative;
@@ -1285,7 +1285,7 @@ a.wpbc_ui_settings__text_pro:hover {
   height: auto;
   outline: 0;
   border: 1px solid #aaa;
-  /*background: url("/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") no-repeat 100% -20px;*/
+  /*background: url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") no-repeat 100% -20px;*/
   font-size: 1em;
   font-family: sans-serif;
   line-height: normal;
@@ -1559,7 +1559,7 @@ a.wpbc_ui_settings__text_pro:hover {
 }
 .chzn-rtl .chzn-search input[type="text"] {
   padding: 4px 5px 4px 20px;
-  /*background: url("/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") no-repeat -30px -20px;*/
+  /*background: url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/_dist/all/_src/chzn-sprite.png") no-repeat -30px -20px;*/
   direction: rtl;
 }
 .chzn-rtl.chzn-container-single .chzn-single div b {

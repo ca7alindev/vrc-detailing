@@ -136,7 +136,7 @@ div.wpbc_ajx_availability_container .datepick-inline .datepick-unselectable,
 /* T I M E   S L O T S */
 .block_hints .block_time, 
 .datepick-inline .timespartly{
-  /*background-image: url("/wp-content/plugins/booking/assets/img/clock_fill.png");*/                                                     /*  //FixIn: 8.9.4.13 */
+  /*background-image: url("https://ca7alindev.github.io/vrc-detailing/wp-content/plugins/booking/assets/img/clock_fill.png");*/                                                     /*  //FixIn: 8.9.4.13 */
   background-repeat: no-repeat;
   background-position:100% 100%; 
 }
