@@ -5,3 +5,4 @@ data/db/
 # --- CURĂȚENIE SISTEM ---
 .DS_Store
 *.log
+data/wordpress/wp-content/uploads/simply-static/temp-files
