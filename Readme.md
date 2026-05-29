@@ -1,7 +1,7 @@
 # LOCAL DEVELOPMENT
 docker compose --file docker-compose.yml up --abort-on-container-exit
 
-# LIVE TESTING
+# LIVE DEVELOPMENT
 ngrok http --domain=joint-snake-willingly.ngrok-free.app 8080
 
 # DB DUMP
