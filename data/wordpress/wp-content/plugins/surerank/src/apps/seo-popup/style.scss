@@ -47,19 +47,44 @@ html:has( #surerank-root ) {
 	}
 }
 
+// Flex style fix for Breakdance editor, to prevent the popup from inheriting unwanted styles.
+html.is-breakdance #surerank-root {
+	.flex.flex-col .flex.flex-col:not( .flex-1, .flex-auto, .flex-none, .flex-initial ),
+	.flex .flex.flex-row:not( .flex-1, .flex-auto, .flex-none, .flex-initial, .flex-col ),
+	.flex .flex:not( .flex-1, .flex-auto, .flex-none, .flex-initial, .flex-row ) {
+		flex: initial;
+	}
+	.flex .flex.flex-col:not( .flex-1, .flex-auto, .flex-none, .flex-initial ),
+	.flex.flex-row .flex.flex-col:not( .flex-1, .flex-auto, .flex-none, .flex-initial ) {
+		flex: 1 1 0%;
+	}
+}
+
 #seo-popup {
 	vertical-align: middle;
 }
 
-#screen-meta + .wrap {
-	> h1 {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
+.surerank-classic-sidebar-box {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-right: 6px;
+	position: relative;
+}
 
-	#seo-popup {
-		display: contents;
-		align-content: center;
-	}
+.surerank-classic-sidebar-box-title {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.surerank-classic-sidebar-trigger-wrap {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.surerank-classic-sidebar-trigger-wrap .button {
+	margin: 0;
 }

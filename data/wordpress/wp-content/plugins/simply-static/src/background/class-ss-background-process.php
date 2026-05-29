@@ -104,6 +104,20 @@ abstract class Background_Process extends Async_Request {
 	protected $is_inline = false;
 
 	/**
+	 * Value written to the current process lock by this PHP process.
+	 *
+	 * @var string|null
+	 */
+	protected $process_lock_value = null;
+
+	/**
+	 * Whether this PHP process has already attempted to release its lock.
+	 *
+	 * @var bool
+	 */
+	protected $process_lock_released = false;
+
+	/**
 	 * The status set when process is cancelling.
 	 *
 	 * @var int
@@ -166,9 +180,16 @@ abstract class Background_Process extends Async_Request {
 		$this->schedule_event();
 
 		if ( $this->is_processing() ) {
-			// Process already running.
-			Util::debug_log( 'Dispatch skipped: background process is already running (lock held).' );
-			return false;
+			if ( $this->process_lock_released && $this->owns_process_lock() ) {
+				Util::debug_log( 'Dispatch found a stale lock owned by the current process. Releasing it before dispatching.' );
+				$this->unlock_process();
+			}
+
+			if ( $this->is_processing() ) {
+				// Process already running.
+				Util::debug_log( 'Dispatch skipped: background process is already running (lock held).' );
+				return false;
+			}
 		}
 
 		/**
@@ -603,7 +624,9 @@ abstract class Background_Process extends Async_Request {
 	 */
 	public function maybe_handle() {
 		// Don't lock up other requests while processing.
-		session_write_close();
+		if ( function_exists( 'session_write_close' ) ) {
+			session_write_close();
+		}
 
 		Util::debug_log( "Maybe handling: Site ID: " . get_current_blog_id() );
 		$this->set_current_site_id( get_current_blog_id() );
@@ -696,8 +719,10 @@ abstract class Background_Process extends Async_Request {
 		$lock_duration = ( property_exists( $this, 'queue_lock_time' ) ) ? $this->queue_lock_time : 60; // 1 minute
 		$lock_duration = apply_filters( $this->identifier . '_queue_lock_time', $lock_duration );
 
-		$microtime = microtime();
-		$locked    = set_site_transient( $this->get_lock_key(), $microtime, $lock_duration );
+		$microtime                   = microtime();
+		$this->process_lock_value    = $microtime . ':' . uniqid( '', true );
+		$this->process_lock_released = false;
+		$locked                      = set_site_transient( $this->get_lock_key(), $this->process_lock_value, $lock_duration );
 
 		/**
 		 * Action to note whether the background process managed to create its lock.
@@ -727,7 +752,16 @@ abstract class Background_Process extends Async_Request {
 	 * @return $this
 	 */
 	protected function unlock_process() {
-		$unlocked = delete_site_transient( $this->get_lock_key() );
+		$lock_key   = $this->get_lock_key();
+		$lock_value = get_site_transient( $lock_key );
+
+		if ( $lock_value && ! $this->owns_process_lock() && ! $this->is_process_lock_stale( $lock_value ) ) {
+			Util::debug_log( 'Skipping process unlock because the lock is owned by another process.' );
+			return $this;
+		}
+
+		$unlocked                     = delete_site_transient( $lock_key );
+		$this->process_lock_released = true;
 
 		/**
 		 * Action to note whether the background process managed to release its lock.
@@ -741,6 +775,59 @@ abstract class Background_Process extends Async_Request {
 		do_action( $this->identifier . '_process_unlocked', $unlocked, $this->get_chain_id() );
 
 		return $this;
+	}
+
+	/**
+	 * Check whether the current PHP process owns the active lock.
+	 *
+	 * @return bool
+	 */
+	protected function owns_process_lock() {
+		if ( empty( $this->process_lock_value ) ) {
+			return false;
+		}
+
+		$lock_value = get_site_transient( $this->get_lock_key() );
+
+		return is_string( $lock_value ) && hash_equals( $this->process_lock_value, $lock_value );
+	}
+
+	/**
+	 * Check whether a process lock is older than the configured lock duration.
+	 *
+	 * @param string $lock_value Current lock transient value.
+	 *
+	 * @return bool
+	 */
+	protected function is_process_lock_stale( $lock_value ) {
+		$lock_timestamp = $this->get_process_lock_timestamp( $lock_value );
+
+		if ( empty( $lock_timestamp ) ) {
+			return false;
+		}
+
+		$lock_duration = ( property_exists( $this, 'queue_lock_time' ) ) ? $this->queue_lock_time : 60; // 1 minute
+		$lock_duration = apply_filters( $this->identifier . '_queue_lock_time', $lock_duration );
+
+		return ( microtime( true ) - $lock_timestamp ) > $lock_duration;
+	}
+
+	/**
+	 * Extract a Unix timestamp from a process lock value.
+	 *
+	 * @param string $lock_value Current lock transient value.
+	 *
+	 * @return float|null
+	 */
+	protected function get_process_lock_timestamp( $lock_value ) {
+		$microtime = explode( ':', $lock_value, 2 )[0];
+		$parts     = explode( ' ', $microtime );
+
+		if ( count( $parts ) !== 2 || ! is_numeric( $parts[0] ) || ! is_numeric( $parts[1] ) ) {
+			return null;
+		}
+
+		return (float) $parts[1] + (float) $parts[0];
 	}
 
 	/**
@@ -865,6 +952,15 @@ abstract class Background_Process extends Async_Request {
 	protected function handle() {
 		$this->lock_process();
 
+		if ( $this->is_cancelled() ) {
+			Util::debug_log( 'Background process cancelled before handling batch. Clearing queue.' );
+			$this->clear_scheduled_event();
+			$this->unlock_process();
+			$this->delete_all();
+
+			return $this->maybe_wp_die();
+		}
+
 		/**
 		 * Number of seconds to sleep between batches. Defaults to 0 seconds, minimum 0.
 		 *
@@ -940,6 +1036,14 @@ abstract class Background_Process extends Async_Request {
 		} while ( ! $this->is_queue_empty() && $this->should_continue() );
 
 		$this->unlock_process();
+
+		if ( $this->is_cancelled() ) {
+			Util::debug_log( 'Background process cancelled after handling batch. Clearing queue.' );
+			$this->clear_scheduled_event();
+			$this->delete_all();
+
+			return $this->maybe_wp_die();
+		}
 
 		// Start next batch or complete process.
 		if ( ! $this->is_queue_empty() ) {

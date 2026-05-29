@@ -4,9 +4,8 @@ Donate link: https://www.paypal.me/BrainstormForce
 Tags: gutenberg, blocks, gutenberg blocks, editor, block
 Requires at least: 5.6
 Requires PHP: 7.4
-Tested up to: 6.9
-Stable tag: 2.19.26
-Beta tag: 3.0.0-beta.2
+Tested up to: 7.0
+Stable tag: 2.19.28
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +227,14 @@ Our external packages use [Rating Star Component](https://github.com/n49/react-s
 
 == Changelog ==
 
+= 2.19.28 - Wednesday, 27th May 2026 =
+* Fix: FAQ — Existing FAQ blocks created before the apiVersion 3 update now validate correctly in the editor.
+* Fix: Info Box CTA button colors were not applying on the frontend when "Inherit from Theme" is disabled.
+
+= 2.19.27 - Wednesday, 20th May 2026 =
+* New: Added full compatibility with WordPress 7.0 — all blocks migrated to apiVersion 3 for iframe editor support.
+* Fix: Resolved fatal errors on WordPress.com Atomic hosting.
+
 = 2.19.26 - Monday, 4th May 2026 =
 * This update addressed a security bug. Props to Wordfence for reporting it responsibly to our team. Please make sure you are using the latest version on your website.
 * Fix: Resolved a PHP warning triggered when inserting images without a query string in the URL.
@@ -280,9 +287,6 @@ Please make sure you are using the latest version on your website.
 The full changelog is available [here](https://wpspectra.com/whats-new/).
 
 == Upgrade Notice ==
-
-= 3.0.0-beta.2 =
-This is a beta release. Please backup your website before updating. We recommend testing on a staging site first and not using this version on a live production website.
 
 = 2.18.2 =
 The Google Fonts library in Spectra has been updated in this version. Please check your font selections to replace any deprecated fonts and explore the new additions.

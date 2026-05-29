@@ -43,6 +43,7 @@ class Seo_Popup {
 
 		$this->enqueue_scripts_admin();
 		add_action( 'category_term_edit_form_top', [ $this, 'add_meta_box_trigger' ] );
+		add_action( 'add_meta_boxes', [ $this, 'register_classic_sidebar_meta_box' ], 20, 2 );
 		add_action( 'created_category', [ $this, 'update_category_seo_values' ] );
 		add_action( 'edited_category', [ $this, 'update_category_seo_values' ] );
 		// For enqueue scripts on the frontend.
@@ -58,6 +59,68 @@ class Seo_Popup {
 	 */
 	public function add_meta_box_trigger() {
 		echo '<span id="seo-popup" class="surerank-root"></span>';
+	}
+
+	/**
+	 * Register the Classic Editor sidebar meta box for opening the SEO popup.
+	 *
+	 * @param string   $post_type Current post type.
+	 * @param \WP_Post $post      Current post object.
+	 * @return void
+	 */
+	public function register_classic_sidebar_meta_box( string $post_type, $post ): void {
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
+
+		$screen = $this->get_current_screen_safe();
+		if ( $screen && ! empty( $screen->is_block_editor ) ) {
+			return;
+		}
+
+		if ( ! Seo_Bar::display_metabox( $post_type, 'wp_posts' ) ) {
+			return;
+		}
+
+		$priority = apply_filters( 'surerank_seo_sidebar_box_priority', 'core', $post_type, $post );
+		if ( ! in_array( $priority, [ 'high', 'core', 'default', 'low' ], true ) ) {
+			$priority = 'core';
+		}
+
+		add_meta_box(
+			'surerank_classic_seo_box',
+			esc_html__( 'SureRank', 'surerank' ),
+			[ $this, 'render_classic_sidebar_meta_box' ],
+			$post_type,
+			'side',
+			$priority
+		);
+	}
+
+	/**
+	 * Render the Classic Editor sidebar meta box content.
+	 *
+	 * @param \WP_Post $post Current post object.
+	 * @return void
+	 */
+	public function render_classic_sidebar_meta_box( $post ): void {
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
+
+		$box_title = apply_filters( 'surerank_seo_sidebar_box_title', __( 'Manage your SEO', 'surerank' ), $post );
+		$cta_label = apply_filters( 'surerank_seo_sidebar_cta_label', __( 'Click here', 'surerank' ), $post );
+		?>
+		<div class="surerank-classic-sidebar-box">
+			<p class="surerank-classic-sidebar-box-title"><?php echo esc_html( $box_title ); ?></p>
+			<div
+				id="surerank-classic-seo-popup-trigger"
+				class="surerank-root"
+				data-surerank-variant="sidebar"
+				data-surerank-cta-label="<?php echo esc_attr( $cta_label ); ?>"
+			></div>
+		</div>
+		<?php
 	}
 
 	/**
@@ -234,6 +297,11 @@ class Seo_Popup {
 			return 'bricks';
 		}
 
+		// Listing pages (post/taxonomy list tables) use a dedicated context.
+		if ( $screen && in_array( $screen->base, [ 'edit', 'edit-tags' ], true ) ) {
+			return 'listing';
+		}
+
 		// Allow integrations (e.g. Divi BFB) to override before the block-editor check.
 		$filtered = apply_filters( 'surerank_detect_editor_type', 'classic', $screen );
 		if ( 'classic' !== $filtered ) {
@@ -259,7 +327,7 @@ class Seo_Popup {
 			return true;
 		}
 
-		if ( ! $screen || empty( $screen->base ) || ! in_array( $screen->base, [ 'post', 'term' ], true ) ) {
+		if ( ! $screen || empty( $screen->base ) || ! in_array( $screen->base, [ 'post', 'term', 'edit', 'edit-tags' ], true ) ) {
 			return false;
 		}
 
@@ -270,6 +338,18 @@ class Seo_Popup {
 		}
 
 		if ( 'term' === $screen->base && ! empty( $screen->taxonomy ) ) {
+			if ( ! Seo_Bar::display_metabox( $screen->taxonomy, 'wp_terms' ) ) {
+				return false;
+			}
+		}
+
+		if ( 'edit' === $screen->base && ! empty( $screen->post_type ) ) {
+			if ( ! Seo_Bar::display_metabox( $screen->post_type, 'wp_posts' ) ) {
+				return false;
+			}
+		}
+
+		if ( 'edit-tags' === $screen->base && ! empty( $screen->taxonomy ) ) {
 			if ( ! Seo_Bar::display_metabox( $screen->taxonomy, 'wp_terms' ) ) {
 				return false;
 			}
