@@ -56,6 +56,16 @@ function mysql2date( $format, $date, $translate = true ) {
 	return $datetime->format( $format );
 }
 
+add_filter('http_request_args', 'adaugare_header_ngrok_simply_static', 10, 2);
+
+function adaugare_header_ngrok_simply_static($args, $url) {
+    // Verificăm dacă URL-ul aparține ngrok
+    if (strpos($url, 'ngrok-free.app') !== false) {
+        $args['headers']['ngrok-skip-browser-warning'] = '1';
+    }
+    return $args;
+}
+
 /**
  * Retrieves the current time based on specified type.
  *
