@@ -204,14 +204,11 @@ export const getNavLinks = () => {
 					pageContent: IMAGE_SEO_PAGE_CONTENT,
 					migratable: true,
 				},
-				/*
-				// Note: Revert this after release
 				{
 					path: '/advanced/image-generation',
 					label: __( 'Image Generation', 'surerank' ),
 					icon: Image,
 				},
-				 */
 				{
 					path: '/advanced/email-reports',
 					label: __( 'Email Summary', 'surerank' ),
@@ -289,16 +286,6 @@ export const getNavLinks = () => {
 					label: __( 'Link Manager', 'surerank' ),
 					icon: Network,
 					migratable: false,
-					submenu: [
-						{
-							path: '/link-manager/link-manager/dashboard',
-							label: __( 'Dashboard', 'surerank' ),
-						},
-						{
-							path: '/link-manager/link-manager/settings',
-							label: __( 'Settings', 'surerank' ),
-						},
-					],
 				},
 				{
 					path: '/link-manager/link-suggestion',
