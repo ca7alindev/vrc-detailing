@@ -1705,7 +1705,7 @@ if ( ! class_exists( 'Astra_Woocommerce' ) ) {
 			// Check if star rating compatibility is not enabled and apply star rating styles.
 			if ( ! astra_wc_is_star_rating_compatibility() ) {
 				$css_desktop_output['.woocommerce .star-rating'] = array(
-					'width'          => 'calc( 5.4em + 5px )',
+					'width'          => 'calc( 5.4em + 10px )',
 					'letter-spacing' => '2px',
 				);
 				$css_desktop_output['.woocommerce .star-rating, .woocommerce .comment-form-rating .stars a, .woocommerce .star-rating::before'] = array(
